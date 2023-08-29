@@ -1,0 +1,30 @@
+class Avion:
+    def __init__(self,modelo,asientos):
+        self.modelo = modelo
+        self.asientos = asientos
+
+        #metodos
+
+class nv:   #numero vuelo
+    def __init__(self,origen,destino,fecha_hora):
+        self.vuelos_disponibles = []
+        self.reservaciones = []
+        self.origen = origen
+        self.destino = destino
+        self.fecha_hora = fecha_hora
+
+#ingreso de los datos del vuelo a crear
+print("cree su vuelo")
+origen = input("ingrese el origen del vuelo: ")
+destino = input("ingrese el destino: ")
+fecha_hora = input("ingrese la fecha y hora: ")
+#################################################
+
+vuelo1 = nv(origen, destino, fecha_hora)
+nv.agregar_vuelo(vuelo1)
+
+#aviones creados
+Airbus = Avion("A320","190")
+Boeing = Avion("800", "189")
+Bombardier = Avion("CRJ700", "78")
+
