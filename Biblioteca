@@ -1,1 +1,72 @@
+class Libro:
+    def __init__(self, titulo, autor):
+        self.titulo = titulo
+        self.autor = autor
+        self.prestado = False
 
+class Usuario:
+    def __init__(self, nombre, id_usuario):
+        self.nombre = nombre
+        self.id_usuario = id_usuario
+        self.prestamos = []
+
+class Biblioteca:
+    def __init__(self):
+        self.catalogo = []
+        self.usuarios = []
+
+    def agregar_libro(self, libro):
+        self.catalogo.append(libro)
+
+    def eliminar_libro(self, libro):
+        self.catalogo.remove(libro)
+
+    def registrar_usuario(self, usuario):
+        self.usuarios.append(usuario)
+
+    def prestar_libro(self, libro, usuario):
+        if libro in self.catalogo and not libro.prestado:
+            libro.prestado = True
+            usuario.prestamos.append(libro)
+            return True
+        else:
+            return False
+
+    def devolver_libro(self, libro, usuario):
+        if libro in usuario.prestamos:
+            libro.prestado = False
+            usuario.prestamos.remove(libro)
+            return True
+        else:
+            return False
+
+    def libros_disponibles(self):
+        return [libro for libro in self.catalogo if not libro.prestado]
+
+    def historial_prestamos(self, usuario):
+        return usuario.prestamos
+
+
+#Uso
+libro1 = Libro("Matilda", "Roald Dahl")
+libro2 = Libro("Donde surgen las sombras", "David Lozano Garbala")
+libro3 = Libro("Teoria de Katherine", "John Green")
+
+biblioteca = Biblioteca()
+
+biblioteca.agregar_libro(libro1)
+biblioteca.agregar_libro(libro2)
+biblioteca.agregar_libro(libro3)
+
+usuario1 = Usuario("Jorge", 1)
+usuario2 = Usuario("Nicolas", 2)
+biblioteca.registrar_usuario(usuario1)
+biblioteca.registrar_usuario(usuario2)
+
+biblioteca.prestar_libro(libro1, usuario1)
+biblioteca.prestar_libro(libro3, usuario1)
+
+print("Todos los Libros: ", [libro.titulo for libro in biblioteca.catalogo])
+print("Libros disponibles:", [libro.titulo for libro in biblioteca.libros_disponibles()])
+print("Historial de prestamos de Usuario 1: ", [libro.titulo for libro in biblioteca.historial_prestamos(usuario1)])
+print("Historial de prestamos de Usuario 2: ", [libro.titulo for libro in biblioteca.historial_prestamos(usuario2)])
