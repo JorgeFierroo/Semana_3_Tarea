@@ -1,62 +1,87 @@
 class Avion:
-    def __init__(self,modelo,asientos):
+    def __init__(self, modelo, num_asientos):
         self.modelo = modelo
-        self.asientos = asientos
-        self.vuelo = None
-        
-    def asignar_vuelo(self,vuelo):
-        self.vuelo = vuelo
+        self.num_asientos = num_asientos
+        self.vuelos = []
 
-        #metodos
+    def agregar_vuelo(self, vuelo):
+        self.vuelos.append(vuelo)
 
-class Vuelo:   #numero vuelo
-    def __init__(self,num_vuelo,origen,destino,fecha_hora,avion):
+class Vuelo:
+    def __init__(self, num_vuelo, origen, destino, fecha_hora, avion):
         self.num_vuelo = num_vuelo
-        self.vuelos_disponibles = []
-        self.reservaciones = []
         self.origen = origen
         self.destino = destino
         self.fecha_hora = fecha_hora
         self.avion = avion
-        self.avion.asignar_vuelo(self)
+        self.reservaciones = []
 
-class Pasajero: #Datos pasajero
+    def agregar_reservacion(self, reservacion):
+        self.reservaciones.append(reservacion)
+
+class Pasajero:
     def __init__(self, nombre, num_pasaporte):
         self.nombre = nombre
         self.num_pasaporte = num_pasaporte
+        self.vuelos_reservados = []
 
-aviones = {
-    "Airbus": Avion("A320", 190),
-    "Boeing": Avion("800", 189),
-    "Bombardier": Avion("CRJ700", 78)
-}
+    def agregar_vuelo_reservado(self, vuelo):
+        self.vuelos_reservados.append(vuelo)
 
-#ingreso de los datos del vuelo a crear
-print("cree su vuelo")
-num_vuelo = int(input("ingrese el numero de vuelo: "))
-origen = input("ingrese el origen del vuelo: ")
-destino = input("ingrese el destino: ")
-fecha_hora = input("ingrese la fecha y hora: ")
-nombre_avion = input("Ingrese su avion (Airbus, Boeing, Bombardier): ")
-avion_seleccionado = aviones.get(nombre_avion)
+class Reservacion:
+    def __init__(self, num_reservacion, pasajero, vuelo):
+        self.num_reservacion = num_reservacion
+        self.pasajero = pasajero
+        self.vuelo = vuelo
+        self.estado = "reservado"
 
-
-if avion_seleccionado:
-    vuelo1 = Vuelo(num_vuelo, origen, destino, fecha_hora, avion_seleccionado)
-    print(avion_seleccionado.vuelo.num_vuelo)
-else:
-    print("Avión no reconocido")
-#################################################
-
-#Ingreso de datos del pasajero
-print("Ingrese sus datos personales")
-nombre = input("Ingrese su nombre completo: ")
-num_pasaporte = int(input("Ingrese su numero de pasaporte: "))
+    def cancelar(self):
+        self.estado = "cancelado"
 
 
+#Uso
+avion1 = Avion("Boeing 747", 300)
+avion2 = Avion("Airbus A320", 150)
+num_vuelo = input("Ingrese numero vuelo: ")
+origen_vuelo = input("Ingrese vuelo origen: ")
+destino_vuelo = input("Ingrese destino: ")
+#Crea vuelos
+vuelo1 = Vuelo(num_vuelo, origen_vuelo, destino_vuelo, "05-010-2023 10:00", avion1)
+vuelo2 = Vuelo("DEF456", "Santiago", "Tacna", "03-06-2023 12:00", avion2)
 
-vuelo1 = Vuelo(num_vuelo, origen, destino, fecha_hora, avion_seleccionado)
+#Crea pasajeros
+pasajero1 = Pasajero("Pedro Pablo", "123")
+pasajero2 = Pasajero("Juan José", "456")
 
-print("Su numero de vuelo es: ",avion_seleccionado.vuelo.num_vuelo)
-print("Su avion es :",avion_seleccionado.modelo)
+#Reservaciones
+reservacion1 = Reservacion(1, pasajero1, vuelo1)
+reservacion2 = Reservacion(2, pasajero2, vuelo2)
+
+#Agregar reservaciones a vuelos y pasajeros
+vuelo1.agregar_reservacion(reservacion1)
+vuelo2.agregar_reservacion(reservacion2)
+pasajero1.agregar_vuelo_reservado(vuelo1)
+pasajero2.agregar_vuelo_reservado(vuelo2)
+
+# Cancela reserva
+reservacion1.cancelar()
+
+# Mostrar información
+print("Vuelos disponibles:")
+for vuelo in avion1.vuelos:
+    print(f"Vuelo {vuelo.num_vuelo}: {vuelo.origen} -> {vuelo.destino}")
+
+print("Reservaciones de:", pasajero1.nombre)
+for vuelo in pasajero1.vuelos_reservados:
+    print(f"Vuelo {vuelo.num_vuelo}: {vuelo.origen} -> {vuelo.destino}, Fecha: {vuelo.fecha_hora} Estado: {vuelo.reservaciones[0].estado}")
+
+print("Lista de pasajeros en vuelo ABC123:")
+for reservacion in vuelo1.reservaciones:
+    print(f"Pasajero: {reservacion.pasajero.nombre}")
+
+print("Reservaciones de:", pasajero2.nombre)
+for vuelo in pasajero2.vuelos_reservados:
+    print(f"Vuelo {vuelo.num_vuelo}: {vuelo.origen} -> {vuelo.destino}, Fecha: {vuelo.fecha_hora} Estado: {vuelo.reservaciones[0].estado}")
+
+
 
