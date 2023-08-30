@@ -5,9 +5,8 @@ class Libro:
         self.prestado = False
 
 class Usuario:
-    def __init__(self, nombre, id_usuario):
+    def __init__(self, nombre):
         self.nombre = nombre
-        self.id_usuario = id_usuario
         self.prestamos = []
 
 class Biblioteca:
@@ -58,8 +57,8 @@ biblioteca.agregar_libro(libro1)
 biblioteca.agregar_libro(libro2)
 biblioteca.agregar_libro(libro3)
 
-usuario1 = Usuario("Jorge", 1)
-usuario2 = Usuario("Nicolas", 2)
+usuario1 = Usuario("Jorge")
+usuario2 = Usuario("Nicolas")
 biblioteca.registrar_usuario(usuario1)
 biblioteca.registrar_usuario(usuario2)
 
@@ -68,5 +67,5 @@ biblioteca.prestar_libro(libro3, usuario1)
 
 print("Todos los Libros: ", [libro.titulo for libro in biblioteca.catalogo])
 print("Libros disponibles:", [libro.titulo for libro in biblioteca.libros_disponibles()])
-print("Historial de prestamos de Usuario 1: ", [libro.titulo for libro in biblioteca.historial_prestamos(usuario1)])
-print("Historial de prestamos de Usuario 2: ", [libro.titulo for libro in biblioteca.historial_prestamos(usuario2)])
+print("Historial de prestamos de Usuario 1",(usuario1.nombre),":", [libro.titulo for libro in biblioteca.historial_prestamos(usuario1)])
+print("Historial de prestamos de Usuario 2",(usuario2.nombre),":", [libro.titulo for libro in biblioteca.historial_prestamos(usuario2)])
