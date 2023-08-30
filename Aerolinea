@@ -57,6 +57,6 @@ num_pasaporte = int(input("Ingrese su numero de pasaporte: "))
 
 vuelo1 = Vuelo(num_vuelo, origen, destino, fecha_hora, avion_seleccionado)
 
-print(avion_seleccionado.vuelo.num_vuelo)
-print(avion_seleccionado.modelo)
+print("Su numero de vuelo es: ",avion_seleccionado.vuelo.num_vuelo)
+print("Su avion es :",avion_seleccionado.modelo)
 
